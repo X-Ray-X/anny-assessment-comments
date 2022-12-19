@@ -1,6 +1,6 @@
-.PHONY: first-run prepare-env up down composer-install migrate migrate-rollback test
+.PHONY: first-run prepare-env up down composer-install migrate migrate-rollback db-seed test artisan
 
-first-run: prepare-env up composer-install migrate
+first-run: prepare-env up composer-install migrate db-seed
 
 prepare-env:
 	cp .env.example .env
@@ -23,5 +23,11 @@ migrate:
 migrate-rollback:
 	./vendor/bin/sail artisan migrate:rollback
 
+db-seed:
+	./vendor/bin/sail artisan db:seed
+
 test:
 	./vendor/bin/sail test
+
+artisan:
+	./vendor/bin/sail exec -it laravel.test bash
