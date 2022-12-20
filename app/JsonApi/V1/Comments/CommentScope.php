@@ -33,11 +33,14 @@ class CommentScope implements Scope
          * can see either published posts OR posts
          * where they are the author.
          */
-        /*$builder->where(function ($query) use ($model) {
+        $builder->where(function ($query) use ($model) {
             return $query
-                ->whereNotNull($model->qualifyColumn('published_at'))
-                ->orWhere($model->qualifyColumn('author_id'), Auth::id());
-        });*/
+                ->where(
+                    $model->qualifyColumn('is_approved'),
+                    '=',
+                    true
+                );
+        });
     }
 
 }
