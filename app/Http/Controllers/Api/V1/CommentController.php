@@ -7,6 +7,7 @@ use App\JsonApi\V1\Comments\CommentQuery;
 use App\JsonApi\V1\Comments\CommentSchema;
 use App\Models\Comment;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Support\Facades\Auth;
 use LaravelJsonApi\Core\Document\Error;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Core\Responses\ErrorResponse;
@@ -35,17 +36,16 @@ class CommentController extends Controller
     {
         $this->authorize('reply', $comment);
 
-        //abort_if($booking->published_at, 403, 'Post is already published.');
+        $validationRules = [
+            'comment' => ['required', 'string'],
+        ];
 
-        //$booking->update(['published_at' => now()]);
-
-        //PostPublished::dispatch($booking);
+        if(Auth::user()) {
+            $validationRules['is_internal'] = ['sometimes', 'bool'];
+        }
 
         try {
-            $data = $query->validate(
-                [
-                    'comment' => ['required', 'string'],
-                ]);
+            $data = $query->validate($validationRules);
         } catch (\Exception $exception) {
             return (new ErrorResponse(Error::make()->setCode($exception->getCode())->setDetail($exception->getMessage())))
                 ->withStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -66,6 +66,10 @@ class CommentController extends Controller
         /** @var Comment $reply */
         $reply = $model->comment($data['comment']);
         $reply->approve();
+
+        if ($data['is_internal'] ?? null) {
+            $reply->update(['is_internal' => $data['is_internal']]);
+        }
 
         $reply->update(['parent_id' => $model->id]);
 

@@ -4,8 +4,10 @@ namespace App\JsonApi\V1;
 
 use App\JsonApi\V1\Bookings\BookingSchema;
 use App\JsonApi\V1\Comments\CommentSchema;
+use App\JsonApi\V1\Comments\CommentScope;
 use App\JsonApi\V1\Resources\ResourceSchema;
 use App\JsonApi\V1\Users\UserSchema;
+use App\Models\Comment;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
 class Server extends BaseServer
@@ -25,7 +27,7 @@ class Server extends BaseServer
      */
     public function serving(): void
     {
-        // no-op
+        Comment::addGlobalScope(new CommentScope());
     }
 
     /**

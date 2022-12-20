@@ -36,12 +36,6 @@ class ResourceController extends Controller
     {
         $this->authorize('comment', $resource);
 
-        //abort_if($booking->published_at, 403, 'Post is already published.');
-
-        //$booking->update(['published_at' => now()]);
-
-        //PostPublished::dispatch($booking);
-
         try {
             $data = $query->validate(
                 [

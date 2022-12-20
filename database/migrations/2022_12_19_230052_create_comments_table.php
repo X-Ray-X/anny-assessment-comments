@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->boolean('is_approved')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->boolean('is_internal')->default(false);
             $table->timestamps();
         });
     }

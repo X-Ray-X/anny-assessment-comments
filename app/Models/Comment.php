@@ -14,7 +14,8 @@ class Comment extends BaseComment
         'comment',
         'user_id',
         'parent_id',
-        'is_approved'
+        'is_approved',
+        'is_internal',
     ];
 
     /**
