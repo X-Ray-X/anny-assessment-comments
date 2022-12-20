@@ -13,7 +13,7 @@ class Comment extends BaseComment
     protected $fillable = [
         'comment',
         'user_id',
-        //'parent_id',
+        'parent_id',
         'is_approved'
     ];
 

@@ -58,9 +58,16 @@ class CommentController extends Controller
             ->withRequest($query)
             ->first();
 
+        if(null !== $model->parent_id) {
+            return (new ErrorResponse(Error::make()->setDetail('You can only post a reply to base level comments.')))
+                ->withStatus(Response::HTTP_BAD_REQUEST);
+        }
+
         /** @var Comment $reply */
         $reply = $model->comment($data['comment']);
         $reply->approve();
+
+        $reply->update(['parent_id' => $model->id]);
 
         return new DataResponse($model);
     }
