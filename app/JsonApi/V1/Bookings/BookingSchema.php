@@ -6,6 +6,8 @@ use App\Models\Booking;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -21,6 +23,13 @@ class BookingSchema extends Schema
     public static string $model = Booking::class;
 
     /**
+    * The maximum include path depth.
+    *
+    * @var int
+    */
+    protected int $maxDepth = 3;
+
+    /**
      * Get the resource fields.
      *
      * @return array
@@ -31,6 +40,9 @@ class BookingSchema extends Schema
             ID::make(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
+            BelongsTo::make('resource')->readOnly(),
+            BelongsTo::make('user')->readOnly(),
+            HasMany::make('comments'),
         ];
     }
 

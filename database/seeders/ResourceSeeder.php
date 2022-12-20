@@ -23,13 +23,13 @@ class ResourceSeeder extends Seeder
         $resourceTwo = Resource::create();
 
         $resourceOne->bookings()->createMany([
-            [],
-            [],
+            ['user_id' => '1'],
+            ['user_id' => '1'],
         ]);
 
         $resourceTwo->bookings()->createMany([
-            [],
-            [],
+            ['user_id' => '1'],
+            ['user_id' => '1'],
         ]);
     }
 }

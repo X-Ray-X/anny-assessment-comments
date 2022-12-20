@@ -1,17 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Resources;
+namespace App\JsonApi\V1\Users;
 
-use App\Models\Resource;
+use App\Models\User;
+use BeyondCode\Comments\Contracts\Commentator;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ResourceSchema extends Schema
+class UserSchema extends Schema implements Commentator
 {
 
     /**
@@ -19,7 +20,7 @@ class ResourceSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Resource::class;
+    public static string $model = User::class;
 
     /**
      * Get the resource fields.
@@ -30,9 +31,10 @@ class ResourceSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('name'),
+            Str::make('email'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
-            HasMany::make('comments'),
         ];
     }
 
@@ -58,4 +60,12 @@ class ResourceSchema extends Schema
         return PagePagination::make();
     }
 
+    /**
+     * @param $model
+     * @return bool
+     */
+    public function needsCommentApproval($model): bool
+    {
+        return false;
+    }
 }

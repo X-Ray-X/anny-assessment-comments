@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Resource;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ResourcePolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
@@ -25,34 +25,34 @@ class ResourcePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User|null  $user
-     * @param  \App\Models\Resource  $resource
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Resource $resource)
+    public function view(?User $user, Comment $comment)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can view the resource's comments.
+     * Determine whether the user can view the comment's replies.
      *
      * @param  \App\Models\User|null  $user
-     * @param  Resource  $resource
+     * @param  Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewComments(?User $user, Resource $resource)
+    public function viewReplies(?User $user, Comment $comment)
     {
-        return $this->view($user, $resource);
+        return $this->view($user, $comment);
     }
 
     /**
-     * Determine whether the user can comment on the resource.
+     * Determine whether the user can reply to the comment.
      *
      * @param  \App\Models\User|null  $user
-     * @param  Resource  $resource
+     * @param  Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function comment(?User $user, Resource $resource)
+    public function reply(?User $user, Comment $comment)
     {
         return true;
     }
@@ -72,10 +72,10 @@ class ResourcePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resource  $resource
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Resource $resource)
+    public function update(User $user, Comment $comment)
     {
         //
     }
@@ -84,10 +84,10 @@ class ResourcePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resource  $resource
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Resource $resource)
+    public function delete(User $user, Comment $comment)
     {
         //
     }
@@ -96,10 +96,10 @@ class ResourcePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resource  $resource
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Resource $resource)
+    public function restore(User $user, Comment $comment)
     {
         //
     }
@@ -108,10 +108,10 @@ class ResourcePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resource  $resource
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Resource $resource)
+    public function forceDelete(User $user, Comment $comment)
     {
         //
     }

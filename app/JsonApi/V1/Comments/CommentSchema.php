@@ -1,17 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Resources;
+namespace App\JsonApi\V1\Comments;
 
-use App\Models\Resource;
+use App\Models\Comment;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ResourceSchema extends Schema
+class CommentSchema extends Schema
 {
 
     /**
@@ -19,7 +20,7 @@ class ResourceSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Resource::class;
+    public static string $model = Comment::class;
 
     /**
      * Get the resource fields.
@@ -30,9 +31,10 @@ class ResourceSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('comment'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
-            HasMany::make('comments'),
+            HasMany::make('replies')->type('comments')->readOnly()->hidden(),
         ];
     }
 

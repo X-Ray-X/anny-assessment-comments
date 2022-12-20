@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('resource_id');
             $table->foreign('resource_id')->references('id')->on('resources')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->bigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

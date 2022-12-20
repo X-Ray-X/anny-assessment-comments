@@ -3,7 +3,9 @@
 namespace App\JsonApi\V1;
 
 use App\JsonApi\V1\Bookings\BookingSchema;
+use App\JsonApi\V1\Comments\CommentSchema;
 use App\JsonApi\V1\Resources\ResourceSchema;
+use App\JsonApi\V1\Users\UserSchema;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
 class Server extends BaseServer
@@ -36,6 +38,8 @@ class Server extends BaseServer
         return [
             ResourceSchema::class,
             BookingSchema::class,
+            UserSchema::class,
+            CommentSchema::class,
         ];
     }
 }

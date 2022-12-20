@@ -34,6 +34,54 @@ class BookingPolicy
     }
 
     /**
+     * Determine whether the user can view the booking's resource.
+     *
+     * @param  \App\Models\User|null  $user
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewResource(?User $user, Booking $booking)
+    {
+        return $this->view($user, $booking);
+    }
+
+    /**
+     * Determine whether the user can view the booking's resource.
+     *
+     * @param  \App\Models\User|null  $user
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewUser(?User $user, Booking $booking)
+    {
+        return $this->view($user, $booking);
+    }
+
+    /**
+     * Determine whether the user can view the booking's comments.
+     *
+     * @param  \App\Models\User|null  $user
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewComments(?User $user, Booking $booking)
+    {
+        return $this->view($user, $booking);
+    }
+
+    /**
+     * Determine whether the user can comment on the booking.
+     *
+     * @param  \App\Models\User|null  $user
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function comment(?User $user, Booking $booking)
+    {
+        return true;
+    }
+
+    /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
